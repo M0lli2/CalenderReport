@@ -2,6 +2,7 @@ package com.example.calenderreport.dto;
 
 import com.example.calenderreport.entity.Calender;
 import lombok.Getter;
+import org.springframework.http.HttpStatusCode;
 
 @Getter
 public class CalenderResponseDto {
@@ -18,4 +19,5 @@ public class CalenderResponseDto {
         this.todo = calender.getTodo();
         this.date = calender.getDate();
     }
+
 }

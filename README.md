@@ -13,4 +13,4 @@
 
 ## ERD
 
-![Image](https://github.com/user-attachments/assets/599312bf-a33d-4b49-9a26-184c4239e036)
+![ERD](https://github.com/user-attachments/assets/cb22948b-936e-4b26-9903-6c1ae8e4fd10)

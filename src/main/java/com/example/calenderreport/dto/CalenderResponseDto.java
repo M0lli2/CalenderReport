@@ -10,20 +10,21 @@ public class CalenderResponseDto {
     private Long id;
     private String writer;
     private String todo;
-    private String date;
+    private String created_date;
+    private String updated_date;
+    private String password;
 
     // Calender class를 인자로 가지는 생성자
     public CalenderResponseDto(Calender calender) {
         this.id = calender.getId();
         this.writer = calender.getWriter();
         this.todo = calender.getTodo();
-        this.date = calender.getDate();
+        this.created_date = calender.getCreated_date();
+        this.updated_date = calender.getUpdated_date();
     }
 
-    public CalenderResponseDto(long id, String todo, String writer, String date) {
-    }
 
+    public CalenderResponseDto(long id, String password, String todo, String writer, String createdDate, String updatedDate) {
 
-    public CalenderResponseDto(long l, String password, String todo, String writer, String createdDate, String updatedDate) {
     }
 }

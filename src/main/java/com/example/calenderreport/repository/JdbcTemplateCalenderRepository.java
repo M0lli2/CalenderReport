@@ -45,10 +45,11 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
         return new CalenderResponseDto(key.longValue(), calender.getPassword(), calender.getTodo(), calender.getWriter(), calender.getCreated_date(), calender.getUpdated_date());
     }
 
-    @Override
-    public List<CalenderResponseDto> findAllCalenders() {
 
-        return jdbcTemplate.query("select * from schedule.schedule where substr(updated_date, 1,7) = ? OR writer = ? order by updated_date desc", calenderRowMapper());
+    @Override
+    public List<CalenderResponseDto> findAllCalenders(String date, String writer) {
+
+        return jdbcTemplate.query("select * from schedule.schedule where substr(updated_date, 1,7) = ? OR writer = ? order by updated_date desc", calenderRowMapper(), date, writer);
     }
 
     private RowMapper<CalenderResponseDto> calenderRowMapper() {
@@ -92,15 +93,19 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
     }
 
     @Override
-    public int updateDate(Long id, String writer, String date) {
-        return jdbcTemplate.update("update calender set writer = ? where id = ?", writer, id);
+    public int updateDate(Long id, String writer, String todo) {
+        return jdbcTemplate.update("update schedule set writer = ? where id = ?", writer, todo, id);
     }
-
-
 
     @Override
     public int deleteCalender(Long id) {
-        return jdbcTemplate.update("delete memo where id = ?", id);
+        return 0;
+    }
+
+
+    @Override
+    public int deleteCalender(Long id, String password) {
+        return jdbcTemplate.update("delete from schedule where password = ? and id = ?", password, id);
     }
 
 

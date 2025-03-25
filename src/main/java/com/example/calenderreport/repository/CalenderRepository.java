@@ -14,10 +14,15 @@ public interface CalenderRepository {
 
     List<CalenderResponseDto> findAllCalenders();
 
+    List<CalenderResponseDto> findAllCalenders(String writer);
+
+    List<CalenderResponseDto> findAllCalenders(String date, String writer);
+
     Optional<Calender> findCalenderById(Long id);
 
     int updateDate(Long id, String writer, String date);
 
     int deleteCalender(Long id);
 
+    int deleteCalender(Long id, String password);
 }

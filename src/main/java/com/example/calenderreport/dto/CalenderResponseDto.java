@@ -20,4 +20,9 @@ public class CalenderResponseDto {
         this.date = calender.getDate();
     }
 
+    public CalenderResponseDto(long id, String todo, String writer, String date) {
+    }
+
+    public CalenderResponseDto(long l, Long id, String password, String todo, String writer, String date) {
+    }
 }

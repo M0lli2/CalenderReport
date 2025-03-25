@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CalenderServiceImpl implements CalenderService{
@@ -25,9 +26,8 @@ public class CalenderServiceImpl implements CalenderService{
     public CalenderResponseDto saveCalender(CalenderRequestDto dto) {
 
         Calender calender = new Calender(dto.getWriter(), dto.getPassword(), dto.getTodo(), dto.getDate());
-        Calender savedCalender = calenderRepository.saveCalender(calender);
 
-        return new CalenderResponseDto(savedCalender);
+        return calenderRepository.saveCalender(calender);
     }
 
     @Override
@@ -39,34 +39,37 @@ public class CalenderServiceImpl implements CalenderService{
 
     @Override
     public CalenderResponseDto findCalenderById(Long id) {
-        Calender calender = calenderRepository.findCalenderById(id);
-        if (calender == null) {
+        Optional<Calender> optionalCalender = calenderRepository.findCalenderById(id);
+        if (optionalCalender.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Id를 찾을 수 없음 =" + id);
         }
-        return new CalenderResponseDto(calender);
+        return new CalenderResponseDto(optionalCalender.get());
     }
 
     @Override
-    public CalenderResponseDto updateCalender(Long id, String writer, String todo) {
-        Calender calender = calenderRepository.findCalenderById(id);
-        if (calender == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Id를 찾을 수 없음 =" + id);
-        }
-        if (writer == null || todo != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title is a required value.");
+    public CalenderResponseDto updateCalender(Long id, String writer, String date) {
+
+        if (writer == null || date != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The title is a required values.");
         }
 
-        return new CalenderResponseDto(calender);
+        int updateRow = calenderRepository.updateDate(id, writer, date);
+        if (updateRow == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data has been modified.");
+        }
+
+        return new CalenderResponseDto(calenderRepository.findCalenderById(id).get());
     }
 
     @Override
     public void deleteCalender(Long id) {
-        Calender calender = calenderRepository.findCalenderById(id);
 
-        if (calender == null) {
+        int deletedRow = calenderRepository.deleteCalender(id);
+
+        if (deletedRow == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id를 찾을 수 없음 =" + id);
         }
-        calenderRepository.deleteCalender(id);
+
     }
 
 

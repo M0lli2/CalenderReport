@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
+
 @AllArgsConstructor
 public class Calender {
 
@@ -22,6 +22,9 @@ public class Calender {
         this.password = password;
         this.todo = todo;
         this.date = date;
+    }
+
+    public Calender(long id, String writer, String todo, String date) {
     }
 
 

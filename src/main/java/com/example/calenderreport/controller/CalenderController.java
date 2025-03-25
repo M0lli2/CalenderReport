@@ -2,7 +2,6 @@ package com.example.calenderreport.controller;
 
 import com.example.calenderreport.dto.CalenderRequestDto;
 import com.example.calenderreport.dto.CalenderResponseDto;
-import com.example.calenderreport.entity.Calender;
 import com.example.calenderreport.service.CalenderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

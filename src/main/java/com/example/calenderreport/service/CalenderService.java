@@ -2,7 +2,6 @@ package com.example.calenderreport.service;
 
 import com.example.calenderreport.dto.CalenderRequestDto;
 import com.example.calenderreport.dto.CalenderResponseDto;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

@@ -45,6 +45,16 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
         return new CalenderResponseDto(key.longValue(), calender.getPassword(), calender.getTodo(), calender.getWriter(), calender.getCreated_date(), calender.getUpdated_date());
     }
 
+    @Override
+    public List<CalenderResponseDto> findAllCalenders() {
+        return List.of();
+    }
+
+    @Override
+    public List<CalenderResponseDto> findAllCalenders(String writer) {
+        return List.of();
+    }
+
 
     @Override
     public List<CalenderResponseDto> findAllCalenders(String date, String writer) {
@@ -107,6 +117,4 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
     public int deleteCalender(Long id, String password) {
         return jdbcTemplate.update("delete from schedule where password = ? and id = ?", password, id);
     }
-
-
 }

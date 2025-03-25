@@ -33,20 +33,22 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
         jdbcInsert.withTableName("calender").usingGeneratedKeyColumns("id");
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("id", calender.getId());
+
         parameters.put("password", calender.getPassword());
         parameters.put("todo", calender.getTodo());
         parameters.put("writer", calender.getWriter());
-        parameters.put("date", calender.getDate());
+        parameters.put("create_date", calender.getCreated_date());
+        parameters.put("update_date", calender.getUpdated_date());
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
-        return new CalenderResponseDto(key.longValue(), calender.getId(), calender.getPassword(), calender.getTodo(), calender.getWriter(), calender.getDate());
+        return new CalenderResponseDto(key.longValue(), calender.getPassword(), calender.getTodo(), calender.getWriter(), calender.getCreated_date(), calender.getUpdated_date());
     }
 
     @Override
     public List<CalenderResponseDto> findAllCalenders() {
-        return jdbcTemplate.query("select * from calender order by date desc", calenderRowMapper());
+
+        return jdbcTemplate.query("select * from schedule.schedule where substr(updated_date, 1,7) = ? OR writer = ? order by updated_date desc", calenderRowMapper());
     }
 
     private RowMapper<CalenderResponseDto> calenderRowMapper() {
@@ -55,9 +57,11 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
             public CalenderResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new CalenderResponseDto(
                         rs.getLong("id"),
+                        rs.getString("password"),
                         rs.getString("todo"),
                         rs.getString("writer"),
-                        rs.getString("date")
+                        rs.getString("update_date"),
+                        rs.getString("created_date")
                 );
             }
         };
@@ -65,7 +69,7 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
 
     @Override
     public Optional<Calender> findCalenderById(Long id) {
-        List<Calender> result = jdbcTemplate.query("select * from calender where id = ?", calenderRowMapperV2(), id);
+        List<Calender> result = jdbcTemplate.query("select * from schedule_data where id = ?", calenderRowMapperV2(), id);
 
 
         return result.stream().findAny();
@@ -77,13 +81,16 @@ public class JdbcTemplateCalenderRepository implements CalenderRepository{
             public Calender mapRow(ResultSet rs, int rowNum) throws SQLException {
                 return new Calender(
                         rs.getLong("id"),
-                        rs.getString("writer"),
+                        rs.getString("password"),
                         rs.getString("todo"),
-                        rs.getString("date")
+                        rs.getString("writer"),
+                        rs.getString("update_date"),
+                        rs.getString("created_date")
                 );
             }
         };
     }
+
     @Override
     public int updateDate(Long id, String writer, String date) {
         return jdbcTemplate.update("update calender set writer = ? where id = ?", writer, id);

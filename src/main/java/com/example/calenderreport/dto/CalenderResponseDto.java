@@ -23,6 +23,7 @@ public class CalenderResponseDto {
     public CalenderResponseDto(long id, String todo, String writer, String date) {
     }
 
-    public CalenderResponseDto(long l, Long id, String password, String todo, String writer, String date) {
+
+    public CalenderResponseDto(long l, String password, String todo, String writer, String createdDate, String updatedDate) {
     }
 }

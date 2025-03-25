@@ -14,14 +14,15 @@ public class Calender {
     private String writer;
     private String password;
     private String todo;
-    private String date;
-    private Long calenderId;
+    private String created_date;
+    private String updated_date;
 
-    public Calender(String writer, String password, String todo, String date) {
+    public Calender(String writer, String password, String todo, String created_date, String updated_date) {
         this.writer = writer;
         this.password = password;
         this.todo = todo;
-        this.date = date;
+        this.created_date = created_date;
+        this.updated_date = updated_date;
     }
 
     public Calender(long id, String writer, String todo, String date) {

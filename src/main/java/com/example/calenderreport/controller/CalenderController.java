@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/calenders")
+@RequestMapping("/api/schedules")
 public class CalenderController {
 
     private final CalenderService calenderService;
